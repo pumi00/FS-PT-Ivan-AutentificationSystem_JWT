@@ -1,21 +1,27 @@
 import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import { Formulary } from "../component/formulary.jsx";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	  const navigate = useNavigate();
+
+
+	  const handleRegister = async (e) => {
+		navigate("/register");
+	  }
+
+	  const handleLogin = async (e) => {
+		navigate("/login");
+	  }
 
 	return (
 		<div className="text-center mt-5">
 			<h2>REGISTER</h2>
-
-			<Formulary type={'register'}/>
+			<button onClick={ handleRegister }>Register</button>
 
 			<h2>LOGIN</h2>
 			
-			<Formulary type={'login'}/>
+			<button onClick={ handleLogin }>Login</button>
 		</div>
 	);
 };

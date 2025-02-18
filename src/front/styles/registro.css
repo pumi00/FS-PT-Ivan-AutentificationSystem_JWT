@@ -1,0 +1,71 @@
+.custom-register-form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 25px;
+    background-color: #f0f8ff; /* Fondo azul claro suave */
+    border: 4px solid #87ceeb; /* Borde azul cielo */
+    border-radius: 15px; /* Esquinas redondeadas */
+    box-shadow: 0px 0px 15px rgba(135, 206, 235, 0.5); /* Sombra suave */
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Fuente divertida pero legible */
+  }
+  
+  .custom-register-form h1 {
+    font-size: 2.2em;
+    color: #4682b4; /* Color azul acero */
+    text-shadow: 1px 1px 0px #ffffff; /* Sombra de texto sutil */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .custom-register-form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .custom-register-form label {
+    display: block;
+    font-size: 1.1em;
+    color: #4682b4; /* Color azul acero */
+    margin-bottom: 5px;
+  }
+  
+  .custom-register-form .required {
+    color: #ff6b6b; /* Color rojo suave para el asterisco */
+  }
+  
+  .custom-register-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid #87ceeb; /* Borde azul cielo */
+    border-radius: 8px; /* Esquinas redondeadas */
+    background-color: #ffffff; /* Fondo blanco */
+    color: #4682b4; /* Color azul acero */
+    transition: border-color 0.2s, box-shadow 0.2s; /* Transición suave */
+  }
+  
+  .custom-register-form input:focus {
+    border-color: #6495ed; /* Cambia el color del borde al enfocar */
+    box-shadow: 0px 0px 8px rgba(135, 206, 235, 0.8); /* Sombra al enfocar */
+    outline: none;
+  }
+  
+  .custom-register-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2em;
+    color: #ffffff; /* Texto blanco */
+    background-color: #87ceeb; /* Fondo azul cielo */
+    border: none;
+    border-radius: 8px; /* Esquinas redondeadas */
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s; /* Transición suave */
+  }
+  
+  .custom-register-button:hover {
+    background-color: #6495ed; /* Cambia el color de fondo al pasar el ratón */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño del botón */
+  }
+  
+  .custom-register-button:active {
+    transform: scale(0.95); /* Reduce el tamaño del botón al hacer clic */
+  }
