@@ -8,7 +8,6 @@ export const Registro_Formulary = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    is_active: true,
   });
 
   const handleChange = (e) => {

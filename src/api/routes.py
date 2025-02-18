@@ -54,7 +54,7 @@ def register():
     try:
         email = request.json.get('email', None)
         password = request.json.get('password', None)
-        is_active = request.json.get('is_active', True
+        is_active = request.json.get('is_active', True)
 
         if not email or not password:
             return jsonify({"msg": "missing data"}), 400
@@ -70,17 +70,15 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
-        if not user_id: 
-            return jsonify({"msg": "User creation failed"}), 500
-
-        token = create_access_token(identity=new_user.id)
-        if not new_user.id:
-        return jsonify({"msg": 'ok', 'token': token, 'id': new_user.id}), 201
+       
+        return jsonify({"msg": 'user created', 'id': new_user.id}), 201
     
     except Exception as e:
         db.session.rollback()
         print("Error during registration:", str(e)) #add print to help you debug
         return jsonify({"msg": "Internal server error", "error": str(e)}), 500
+
+
 
 @api.route('/login', methods=['POST'])
 def login():

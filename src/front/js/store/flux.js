@@ -52,9 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!resp.ok) throw new Error('Error registering')
 				const data = await resp.json()
 				console.log(data)
-				localStorage.setItem('token', data.token)
-				localStorage.setItem('id', data.id)
-				setStore({ auth: true, token: data.token, id: data.user.id })
+				setStore({ auth: true, id: data.user.id })
 				return true;
 			}
 			catch (error) {
