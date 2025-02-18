@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext.js"
 import { useNavigate } from "react-router-dom";
+import "../../styles/login.css";
 
 export const Login_Formulary = () => {
   const { actions } = useContext(Context)
@@ -24,7 +25,7 @@ export const Login_Formulary = () => {
     }
      
     await actions.login(formData); 
-    navigate("/");
+    navigate("/logged");
   };
 
   return (

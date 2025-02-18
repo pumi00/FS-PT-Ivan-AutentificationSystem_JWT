@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
+import "../../styles/registro.css";
+
 
 export const Registro_Formulary = () => {
   const { store, actions } = useContext(Context);
