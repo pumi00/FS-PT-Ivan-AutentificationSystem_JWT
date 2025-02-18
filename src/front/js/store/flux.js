@@ -1,25 +1,21 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			token: null,
+			id : null,
+			users: [],
+			user: null,
+			auth: localStorage.getItem('token') || false,
+
 		},
 		actions: {
+
+			// --------------------Data--------------------
+
 			
 			getUserData: async () =>{try{
 
-				const resp = await fetch('https://verbose-guide-wr9v5p7rvqvgf566r-3001.app.github.dev/api/protected',{
+				const resp = await fetch(process.env.BACKEND_URL + 'protected', {
 					method: 'GET',
 					headers: {
 						'Content-Type' : 'application/json',
@@ -27,7 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					},
 					body: JSON.stringify(formData)
 				})
-				if(!resp.ok) throw new Error('Error registering')
+				if(!resp.ok) throw new Error('Error datos')
 				const data = await resp.json()
 				console.log(data)
 				localStorage.setItem('token', data.token)
@@ -37,78 +33,85 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.error(error)
 			}
 		},
-		register: async formData => {
 
-			try{
+		
+		
+		// --------------------Formularies--------------------
 
-				const resp = await fetch('https://verbose-guide-wr9v5p7rvqvgf566r-3001.app.github.dev/api/register',{
+
+		register: async (formData) => {
+			try {
+				const resp = await fetch(process.env.BACKEND_URL + 'api/register', {
 					method: 'POST',
 					headers: {
-						'Content-Type' : 'application/json'
+						'Content-Type': 'application/json',
+						// Elimina el header Authorization
 					},
 					body: JSON.stringify(formData)
 				})
-				if(!resp.ok) throw new Error('Error registering')
+				if (!resp.ok) throw new Error('Error registering')
 				const data = await resp.json()
 				console.log(data)
-				localStorage.setItem('token', data.token)
-				setStore({auth: true, token: data.token})
+				setStore({ auth: true, id: data.user.id })
+				return true;
 			}
-			catch (error){
+			catch (error) {
 				console.error(error)
+				return false;
 			}
 		},
-		login: async formData => {
+		login: async (formData) => {
 
 			try{
-				const resp = await fetch('https://verbose-guide-wr9v5p7rvqvgf566r-3001.app.github.dev/api/login',{
-					method: 'POST',
-					headers: {
-						'Content-Type' : 'application/json'
-					},
-					body: JSON.stringify(formData)
-				})
-				if(!resp.ok) throw new Error('Error registering')
-				const data = await resp.json()
-				console.log(data)
-				localStorage.setItem('token', data.token)
-				setStore({auth: true, token: data.token})
-			}
-			catch (error){
-				console.error(error)
-			}
-		},
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+				const response = await fetch(process.env.BACKEND_URL + "/api/login", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(formData),
 				});
 
-				//reset the global store
-				setStore({ demo: demo });
+				if (!response.ok) {
+					const errorData = await response.json();
+					throw new Error(errorData.message || "Credenciales incorrectas");
+				}
+
+				const data = await response.json();
+
+				localStorage.setItem("token", data.token);
+				localStorage.setItem("id", data.user.id);
+				setStore({ auth: true, token: data.token , id: data.user.id});
+
+				return true; 
 			}
+			catch (error){
+				console.error(error)
+				return false;
+			}
+		},
+
+		// --------------------Users--------------------
+
+
+		getUsers: async () => {
+			try {
+				const response = await fetch(process.env.BACKEND_URL + '/api/users')
+				if (!response.ok) throw new Error("Error obteniendo usuarios");
+				const data = await response.json();
+				setStore({ users: data.data });
+			} catch (error) {
+				console.error("Error obteniendo usuarios:", error);
+			}
+		},
+
+		getUserId: async (id) => {
+			try {
+				const response = await fetch(process.env.BACKEND_URL + '/api/user/' + id)
+				if (!response.ok) throw new Error("Error obteniendo el id del Usuario");
+				const data = await response.json();
+				return data.user;
+			} catch (error) {
+				console.error("Error obteniendo el ID del usuario:", error);
+			}
+		},
 		}
 	};
 };
